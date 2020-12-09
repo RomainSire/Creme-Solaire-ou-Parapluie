@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="blury-background" :style="BGstyle"></div>
-    <div class="clear-background" :style="BGstyle"></div>
+    <div class="blury-background" :style="adaptativeBackgroundImage"></div>
+    <div class="clear-background" :style="adaptativeBackgroundImage"></div>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
     imageUrl: String
   },
   computed: {
-    BGstyle() {
+    adaptativeBackgroundImage() {
       return `background-image: url('${this.imageUrl}')`
     }
   }

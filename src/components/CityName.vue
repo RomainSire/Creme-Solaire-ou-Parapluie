@@ -1,7 +1,7 @@
 <template>
-  <form>
+  <form autocomplete="off">
     <label for="city">Ville</label>
-    <input type="text" id="city" v-model="city" :style="sizeStyle" />
+    <input type="text" id="city" v-model="city" :style="adaptativeWidth" />
   </form>
 </template>
 
@@ -15,7 +15,7 @@ export default {
     }
   },
   computed: {
-    sizeStyle() {
+    adaptativeWidth() {
       return `font-size: ${this.fontSizePx}px; width: ${(this.city.length + 1) *
         (this.fontSizePx / 1.4)}px;`
     }

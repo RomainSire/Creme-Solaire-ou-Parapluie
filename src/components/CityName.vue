@@ -1,0 +1,47 @@
+<template>
+  <form>
+    <label for="city">Ville</label>
+    <input type="text" id="city" v-model="city" :style="sizeStyle" />
+  </form>
+</template>
+
+<script>
+export default {
+  name: 'CityName',
+  data: function() {
+    return {
+      city: 'Perpignan',
+      fontSizePx: 50
+    }
+  },
+  computed: {
+    sizeStyle() {
+      return `font-size: ${this.fontSizePx}px; width: ${(this.city.length + 1) *
+        (this.fontSizePx / 1.4)}px;`
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+label {
+  display: none;
+}
+input {
+  // position & size
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  max-width: 85%;
+  // background & border
+  background: #333a;
+  border: 0.15em solid #fff;
+  // text
+  color: #fff;
+  text-align: center;
+  font-family: 'Ubuntu Mono', monospace;
+  text-transform: uppercase;
+}
+</style>

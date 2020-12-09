@@ -22,19 +22,20 @@ export default {
 <style lang="scss" scoped>
 .blury-background {
   position: absolute;
+  z-index: -10;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   background: center/cover no-repeat;
   filter: blur(10px) sepia(60%);
-  -webkit-filter: blur(10px) sepia(60%);
 }
 .clear-background {
   position: absolute;
+  z-index: -5;
   top: 15%;
   right: 15%;
-  bottom: 20%;
+  bottom: 15%;
   left: 15%;
   background: center/cover no-repeat;
   box-shadow: 0 0 20px #555;

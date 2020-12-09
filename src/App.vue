@@ -5,9 +5,7 @@
 </template>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto&display=swap');
-// font-family: 'Montserrat', sans-serif;
-// font-family: 'Roboto', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@700&family=Roboto&display=swap');
 * {
   box-sizing: border-box;
 }

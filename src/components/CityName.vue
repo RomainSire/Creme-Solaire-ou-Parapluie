@@ -36,7 +36,7 @@ input {
   min-width: 200px;
   max-width: 85%;
   // background & border
-  background: #333a;
+  background: #333d;
   border: 0.15em solid #fff;
   box-shadow: 0 0 10px #3338;
   // text

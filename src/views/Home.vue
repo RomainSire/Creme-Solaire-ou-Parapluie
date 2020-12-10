@@ -41,28 +41,34 @@ export default {
         ])
         .then(
           axios.spread((currentData, forecastData) => {
-            this.weather.currentTemp = currentData.data.main.temp
-            this.weather.icon = currentData.data.weather[0].icon
-            this.weather.wind = currentData.data.wind.speed
-            this.weather.pressure = currentData.data.main.pressure
-            this.weather.humidity = currentData.data.main.humidity
-            this.weather.threeHours = {
-              time: forecastData.data.list[1].dt_txt,
-              icon: forecastData.data.list[1].weather[0].icon,
-              temp: forecastData.data.list[1].main.temp
-            }
-            this.weather.sixHours = {
-              time: forecastData.data.list[2].dt_txt,
-              icon: forecastData.data.list[2].weather[0].icon,
-              temp: forecastData.data.list[2].main.temp
-            }
-            this.weather.twentyfourHours = {
-              time: forecastData.data.list[8].dt_txt,
-              icon: forecastData.data.list[8].weather[0].icon,
-              temp: forecastData.data.list[8].main.temp
+            this.weather = {
+              currentTemp: currentData.data.main.temp,
+              icon: currentData.data.weather[0].icon,
+              altIcon: currentData.data.weather[0].description,
+              wind: currentData.data.wind.speed,
+              pressure: currentData.data.main.pressure,
+              humidity: currentData.data.main.humidity,
+              threeHours: {
+                time: forecastData.data.list[1].dt_txt,
+                icon: forecastData.data.list[1].weather[0].icon,
+                temp: forecastData.data.list[1].main.temp
+              },
+              sixHours: {
+                time: forecastData.data.list[2].dt_txt,
+                icon: forecastData.data.list[2].weather[0].icon,
+                temp: forecastData.data.list[2].main.temp
+              },
+              twentyfourHours: {
+                time: forecastData.data.list[8].dt_txt,
+                icon: forecastData.data.list[8].weather[0].icon,
+                temp: forecastData.data.list[8].main.temp
+              }
             }
           })
         )
+        .catch(error => {
+          console.error(error)
+        })
     }
   },
   mounted: function() {

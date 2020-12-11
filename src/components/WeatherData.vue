@@ -1,44 +1,66 @@
 <template>
   <main class="main">
+    <!-- CURRENT WEATHER -->
     <div class="current">
       <img :src="getCurrentWeatherIcon" :alt="weather.altIcon" />
-      <p>{{ weather.currentTemp }}°C</p>
+      <p>{{ Math.round(weather.currentTemp * 10) / 10 }}°C</p>
     </div>
+    <!-- CURRENT TIME -->
     <div class="time">
       <p class="time--hour">{{ currentTime }}</p>
       <p class="time--day">{{ currentDay }}</p>
     </div>
+    <!-- DETAIL OF CURRENT WEATHER -->
     <div class="detail">
       <div class="detail--wind">
         <img
           src="../assets/additionalIcons/wind.svg"
           alt="logo vitesse du vent"
         />
-        <p>{{ weather.wind * 3.6 }} <small>km/h</small></p>
+        <p>{{ Math.round(weather.wind * 3.6) }} <small>km/h</small></p>
       </div>
       <div class="detail--pressure">
         <img
           src="../assets/additionalIcons/barometer.svg"
           alt="logo d'un baromètre"
         />
-        <p>{{ weather.pressure }} <small>HPa</small></p>
+        <p>{{ Math.round(weather.pressure) }} <small>HPa</small></p>
       </div>
       <div class="detail--humidity">
         <img
           src="../assets/additionalIcons/humidity.svg"
           alt="logo pour l'humidité"
         />
-        <p>{{ weather.humidity }} <small>%</small></p>
+        <p>{{ Math.round(weather.humidity) }} <small>%</small></p>
       </div>
     </div>
+    <!-- WEATHER FORECAST -->
     <div class="forecast">
-      <!-- <div class="forecast--wind">
-        <img
-          src="../assets/additionalIcons/wind.svg"
-          alt="logo vitesse du vent"
-        />
-        <p>{{ weather.wind * 3.6 }} <small>km/h</small></p>
-      </div> -->
+      <div class="forecast--3h">
+        <img :src="get3hIcon" alt="" />
+        <p class="forecast--temp">
+          {{ weather.threeHours ? Math.round(weather.threeHours.temp) : '' }}°C
+        </p>
+        <p class="forecast--time">Dans 3h</p>
+      </div>
+      <div class="forecast--6h">
+        <img :src="get6hIcon" alt="" />
+        <p class="forecast--temp">
+          {{ weather.sixHours ? Math.round(weather.sixHours.temp) : '' }}°C
+        </p>
+        <p class="forecast--time">Dans 6h</p>
+      </div>
+      <div class="forecast--24h">
+        <img :src="get24hIcon" alt="" />
+        <p class="forecast--temp">
+          {{
+            weather.twentyfourHours
+              ? Math.round(weather.twentyfourHours.temp)
+              : ''
+          }}°C
+        </p>
+        <p class="forecast--time">Demain</p>
+      </div>
     </div>
   </main>
 </template>
@@ -52,7 +74,7 @@ export default {
   computed: {
     getCurrentWeatherIcon() {
       return this.weather.icon
-        ? require('../assets/weatherIcons/' + this.weather.icon + '.svg')
+        ? require(`../assets/weatherIcons/${this.weather.icon}.svg`)
         : ''
     },
     currentTime() {
@@ -64,6 +86,21 @@ export default {
       var moment = require('moment')
       moment.locale('fr')
       return moment().format('dddd DD MMMM')
+    },
+    get3hIcon() {
+      return this.weather.threeHours
+        ? require(`../assets/weatherIcons/${this.weather.threeHours.icon}.svg`)
+        : ''
+    },
+    get6hIcon() {
+      return this.weather.sixHours
+        ? require(`../assets/weatherIcons/${this.weather.sixHours.icon}.svg`)
+        : ''
+    },
+    get24hIcon() {
+      return this.weather.twentyfourHours
+        ? require(`../assets/weatherIcons/${this.weather.twentyfourHours.icon}.svg`)
+        : ''
     }
   },
   created: function() {
@@ -137,7 +174,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // Positionning around a circle..
+    // Positionning around a circle.
     position: absolute;
     top: 50%;
     left: 50%;
@@ -150,6 +187,39 @@ export default {
   }
   &--humidity {
     transform: translate((-216px - 50px), (125px - 50px));
+  }
+}
+.forecast {
+  img {
+    width: 40px;
+    max-height: 40px;
+  }
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  & > div {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    @include card-format;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // Positionning around a circle.
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+  &--3h {
+    transform: translate((216px - 50px), (-125px - 50px));
+  }
+  &--6h {
+    transform: translate((250px - 50px), -50px);
+  }
+  &--24h {
+    transform: translate((216px - 50px), (125px - 50px));
   }
 }
 </style>

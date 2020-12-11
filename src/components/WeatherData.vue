@@ -31,7 +31,15 @@
         <p>{{ weather.humidity }} <small>%</small></p>
       </div>
     </div>
-    <div class="forecast"></div>
+    <div class="forecast">
+      <!-- <div class="forecast--wind">
+        <img
+          src="../assets/additionalIcons/wind.svg"
+          alt="logo vitesse du vent"
+        />
+        <p>{{ weather.wind * 3.6 }} <small>km/h</small></p>
+      </div> -->
+    </div>
   </main>
 </template>
 
@@ -65,9 +73,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@mixin card-format {
+  color: #333;
+  font-weight: bold;
+  border: 5px solid #3338;
+  background: #eeed;
+  box-shadow: 0 0 10px #3338;
+}
 .main {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -79,9 +94,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  border: 3px solid #fff;
-  background: #333d;
-  box-shadow: 0 0 10px #3338;
+  @include card-format;
   img {
     width: 80%;
     max-height: 100px;
@@ -89,18 +102,15 @@ export default {
   p {
     font-size: 1.5rem;
     margin: 0.5em 0 0 0;
-    color: #fff;
   }
 }
 .time {
   text-align: center;
-  margin-top: 1em;
+  margin-top: 1.5em;
   padding: 0.5em;
-  border: 3px solid #fff;
-  background: #333d;
-  box-shadow: 0 0 10px #3338;
   border-radius: 1em;
-  color: #fff;
+  border: 3px solid #fff;
+  @include card-format;
   p {
     margin: 0;
     line-height: 1.3em;
@@ -121,11 +131,8 @@ export default {
   & > div {
     height: 100px;
     width: 100px;
-    border: 3px solid #fff;
-    background: #333d;
-    box-shadow: 0 0 10px #3338;
     border-radius: 50%;
-    color: #fff;
+    @include card-format;
     display: flex;
     flex-direction: column;
     justify-content: center;

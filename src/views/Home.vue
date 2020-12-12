@@ -3,7 +3,7 @@
     <ReactiveBackground
       imageUrl="https://media.routard.com/image/01/4/fb-perpignan.1543014.jpg"
     />
-    <CityName />
+    <CityName @cityChanged="onLocationChange" />
     <WeatherData v-bind:weather="weather" />
   </div>
 </template>
@@ -23,11 +23,15 @@ export default {
   },
   data: function() {
     return {
-      location: 'Mosset',
+      location: 'Montpellier',
       weather: {}
     }
   },
   methods: {
+    onLocationChange(city) {
+      this.location = city
+      this.getWeatherInfos()
+    },
     getWeatherInfos() {
       const axios = require('axios').default
       axios

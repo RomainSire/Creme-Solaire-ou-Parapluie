@@ -1,5 +1,5 @@
 <template>
-  <form autocomplete="off">
+  <form autocomplete="off" v-on:submit="onSubmitForm">
     <label for="city">Ville</label>
     <input type="text" id="city" v-model="city" :style="adaptativeWidth" />
   </form>
@@ -10,7 +10,7 @@ export default {
   name: 'CityName',
   data: function() {
     return {
-      city: 'Perpignan',
+      city: 'Montpellier',
       fontSizePx: 50
     }
   },
@@ -18,6 +18,12 @@ export default {
     adaptativeWidth() {
       return `font-size: ${this.fontSizePx}px; width: ${(this.city.length + 1) *
         (this.fontSizePx / 1.4)}px;`
+    }
+  },
+  methods: {
+    onSubmitForm(e) {
+      e.preventDefault()
+      this.$emit('cityChanged', this.city)
     }
   }
 }

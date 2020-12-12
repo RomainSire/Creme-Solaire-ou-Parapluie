@@ -30,7 +30,10 @@ label {
 input {
   // position & size
   position: absolute;
-  top: 30%;
+  top: 25%;
+  @media screen and (max-width: 650px) {
+    top: 10%;
+  }
   left: 50%;
   transform: translateX(-50%);
   min-width: 200px;

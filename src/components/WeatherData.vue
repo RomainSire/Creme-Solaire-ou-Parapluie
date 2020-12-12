@@ -37,20 +37,21 @@
     <!-- WEATHER FORECAST -->
     <div class="forecast">
       <div class="forecast--3h">
+        <p class="forecast--time">+3h</p>
         <img :src="get3hIcon" alt="" />
         <p class="forecast--temp">
           {{ weather.threeHours ? Math.round(weather.threeHours.temp) : '' }}°C
         </p>
-        <p class="forecast--time">Dans 3h</p>
       </div>
       <div class="forecast--6h">
+        <p class="forecast--time">+6h</p>
         <img :src="get6hIcon" alt="" />
         <p class="forecast--temp">
           {{ weather.sixHours ? Math.round(weather.sixHours.temp) : '' }}°C
         </p>
-        <p class="forecast--time">Dans 6h</p>
       </div>
       <div class="forecast--24h">
+        <p class="forecast--time">+24h</p>
         <img :src="get24hIcon" alt="" />
         <p class="forecast--temp">
           {{
@@ -59,7 +60,6 @@
               : ''
           }}°C
         </p>
-        <p class="forecast--time">Demain</p>
       </div>
     </div>
   </main>
@@ -119,9 +119,15 @@ export default {
 }
 .main {
   position: absolute;
-  top: 45%;
+  bottom: 20%;
+  @media screen and (max-width: 650px) {
+    bottom: 5%;
+  }
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .current {
   width: 200px;
@@ -157,6 +163,9 @@ export default {
   }
 }
 .detail {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
   img {
     width: 40px;
     max-height: 40px;
@@ -168,58 +177,75 @@ export default {
   & > div {
     height: 100px;
     width: 100px;
+    margin: 5px;
     border-radius: 50%;
     @include card-format;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // Positionning around a circle.
-    position: absolute;
-    top: 50%;
-    left: 50%;
   }
-  &--wind {
-    transform: translate((-216px - 50px), (-125px - 50px));
-  }
-  &--pressure {
-    transform: translate((-250px - 50px), -50px);
-  }
-  &--humidity {
-    transform: translate((-216px - 50px), (125px - 50px));
+
+  @media screen and (min-width: 650px) {
+    & > div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+    &--wind {
+      transform: translate((-216px - 50px), (-125px - 50px));
+    }
+    &--pressure {
+      transform: translate((-250px - 50px), -50px);
+    }
+    &--humidity {
+      transform: translate((-216px - 50px), (125px - 50px));
+    }
   }
 }
 .forecast {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
   img {
     width: 40px;
     max-height: 40px;
   }
   p {
-    margin: 0;
     font-size: 0.9rem;
+  }
+  &--time {
+    margin: 0 0 0.5em 0;
+  }
+  &--temp {
+    margin: 0.5em 0 0 0;
   }
   & > div {
     height: 100px;
     width: 100px;
+    margin: 5px;
     border-radius: 50%;
     @include card-format;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // Positionning around a circle.
-    position: absolute;
-    top: 50%;
-    left: 50%;
   }
-  &--3h {
-    transform: translate((216px - 50px), (-125px - 50px));
-  }
-  &--6h {
-    transform: translate((250px - 50px), -50px);
-  }
-  &--24h {
-    transform: translate((216px - 50px), (125px - 50px));
+  @media screen and (min-width: 650px) {
+    & > div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+    &--3h {
+      transform: translate((216px - 50px), (-125px - 50px));
+    }
+    &--6h {
+      transform: translate((250px - 50px), -50px);
+    }
+    &--24h {
+      transform: translate((216px - 50px), (125px - 50px));
+    }
   }
 }
 </style>

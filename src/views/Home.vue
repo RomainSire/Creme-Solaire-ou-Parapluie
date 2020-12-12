@@ -23,7 +23,7 @@ export default {
   },
   data: function() {
     return {
-      location: 'Perpignan',
+      location: 'Mosset',
       weather: {}
     }
   },
@@ -33,10 +33,10 @@ export default {
       axios
         .all([
           axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?q=perpignan&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
+            `https://api.openweathermap.org/data/2.5/weather?q=${this.location}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
           ),
           axios.get(
-            `https://api.openweathermap.org/data/2.5/forecast?q=perpignan&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
+            `https://api.openweathermap.org/data/2.5/forecast?q=${this.location}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
           )
         ])
         .then(

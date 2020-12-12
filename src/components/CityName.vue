@@ -1,29 +1,32 @@
 <template>
   <form autocomplete="off" v-on:submit="onSubmitForm">
     <label for="city">Ville</label>
-    <input type="text" id="city" v-model="city" :style="adaptativeWidth" />
+    <input type="text" id="city" v-model="location" :style="adaptativeWidth" />
   </form>
 </template>
 
 <script>
 export default {
   name: 'CityName',
+  props: {
+    location: String
+  },
   data: function() {
     return {
-      city: 'Montpellier',
       fontSizePx: 50
     }
   },
   computed: {
     adaptativeWidth() {
-      return `font-size: ${this.fontSizePx}px; width: ${(this.city.length + 1) *
-        (this.fontSizePx / 1.4)}px;`
+      return `font-size: ${this.fontSizePx}px; width: ${(this.location.length +
+        1) *
+        (this.fontSizePx / 1.7)}px;`
     }
   },
   methods: {
     onSubmitForm(e) {
       e.preventDefault()
-      this.$emit('cityChanged', this.city)
+      this.$emit('cityChanged', this.location)
     }
   }
 }

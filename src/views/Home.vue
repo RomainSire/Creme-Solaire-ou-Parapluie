@@ -3,7 +3,7 @@
     <ReactiveBackground
       imageUrl="https://media.routard.com/image/01/4/fb-perpignan.1543014.jpg"
     />
-    <CityName @cityChanged="onLocationChange" />
+    <CityName @cityChanged="onLocationChange" v-bind:location="location" />
     <WeatherData v-bind:weather="weather" />
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   },
   data: function() {
     return {
-      location: 'Montpellier',
+      location: '',
       weather: {}
     }
   },
@@ -76,6 +76,7 @@ export default {
     }
   },
   mounted: function() {
+    this.location = this.$route.params.location
     this.getWeatherInfos()
   }
 }

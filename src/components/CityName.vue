@@ -6,17 +6,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'CityName',
-  props: {
-    location: String
-  },
+  // props: {
+  //   location: String
+  // },
   data: function() {
     return {
       fontSizePx: 50
     }
   },
   computed: {
+    ...mapState(['location']),
     adaptativeWidth() {
       return `font-size: ${this.fontSizePx}px; width: ${(this.location.length +
         1) *
@@ -26,7 +28,7 @@ export default {
   methods: {
     onSubmitForm(e) {
       e.preventDefault()
-      this.$emit('cityChanged', this.location)
+      // this.$emit('cityChanged', this.location)
     }
   }
 }

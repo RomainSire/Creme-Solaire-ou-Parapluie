@@ -3,13 +3,14 @@
     <ReactiveBackground
       imageUrl="https://media.routard.com/image/01/4/fb-perpignan.1543014.jpg"
     />
-    <CityName @cityChanged="onLocationChange" v-bind:location="location" />
+    <CityName />
     <WeatherData v-bind:weather="weather" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import { mapState, mapActions } from 'vuex'
 import ReactiveBackground from '@/components/ReactiveBackground.vue'
 import CityName from '@/components/CityName.vue'
 import WeatherData from '@/components/WeatherData'
@@ -23,15 +24,18 @@ export default {
   },
   data: function() {
     return {
-      location: '',
       weather: {}
     }
   },
+  computed: {
+    ...mapState(['location'])
+  },
   methods: {
-    onLocationChange(city) {
-      this.location = city
-      this.getWeatherInfos()
-    },
+    ...mapActions(['updateLocation']),
+    // onLocationChange(city) {
+    //   this.location = city
+    //   this.getWeatherInfos()
+    // },
     getWeatherInfos() {
       const axios = require('axios').default
       axios
@@ -76,7 +80,8 @@ export default {
     }
   },
   mounted: function() {
-    this.location = this.$route.params.location
+    this.updateLocation(this.$route.params.location)
+    // this.location = this.$route.params.location
     this.getWeatherInfos()
   }
 }

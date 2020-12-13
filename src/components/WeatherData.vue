@@ -2,8 +2,19 @@
   <main class="main">
     <!-- CURRENT WEATHER -->
     <div class="current">
-      <img :src="getCurrentWeatherIcon" :alt="weather.altIcon" />
-      <p>{{ Math.round(weather.currentTemp * 10) / 10 }}°C</p>
+      <img
+        :src="getCurrentWeatherIcon"
+        :alt="
+          currentWeather.weather ? currentWeather.weather[0].description : ''
+        "
+      />
+      <p>
+        {{
+          currentWeather.main
+            ? Math.round(currentWeather.main.temp * 10) / 10
+            : ''
+        }}°C
+      </p>
     </div>
     <!-- CURRENT TIME -->
     <div class="time">
@@ -17,21 +28,38 @@
           src="../assets/additionalIcons/wind.svg"
           alt="logo vitesse du vent"
         />
-        <p>{{ Math.round(weather.wind * 3.6) }} <small>km/h</small></p>
+        <p>
+          {{
+            currentWeather.wind
+              ? Math.round(currentWeather.wind.speed * 3.6)
+              : ''
+          }}
+          <small>km/h</small>
+        </p>
       </div>
       <div class="detail--pressure">
         <img
           src="../assets/additionalIcons/barometer.svg"
           alt="logo d'un baromètre"
         />
-        <p>{{ Math.round(weather.pressure) }} <small>HPa</small></p>
+        <p>
+          {{
+            currentWeather.main ? Math.round(currentWeather.main.pressure) : ''
+          }}
+          <small>HPa</small>
+        </p>
       </div>
       <div class="detail--humidity">
         <img
           src="../assets/additionalIcons/humidity.svg"
           alt="logo pour l'humidité"
         />
-        <p>{{ Math.round(weather.humidity) }} <small>%</small></p>
+        <p>
+          {{
+            currentWeather.main ? Math.round(currentWeather.main.humidity) : ''
+          }}
+          <small>%</small>
+        </p>
       </div>
     </div>
     <!-- WEATHER FORECAST -->
@@ -40,14 +68,22 @@
         <p class="forecast--time">+3h</p>
         <img :src="get3hIcon" alt="" />
         <p class="forecast--temp">
-          {{ weather.threeHours ? Math.round(weather.threeHours.temp) : '' }}°C
+          {{
+            forecastWeather.list
+              ? Math.round(forecastWeather.list[1].main.temp)
+              : ''
+          }}°C
         </p>
       </div>
       <div class="forecast--6h">
         <p class="forecast--time">+6h</p>
         <img :src="get6hIcon" alt="" />
         <p class="forecast--temp">
-          {{ weather.sixHours ? Math.round(weather.sixHours.temp) : '' }}°C
+          {{
+            forecastWeather.list
+              ? Math.round(forecastWeather.list[2].main.temp)
+              : ''
+          }}°C
         </p>
       </div>
       <div class="forecast--24h">
@@ -55,8 +91,8 @@
         <img :src="get24hIcon" alt="" />
         <p class="forecast--temp">
           {{
-            weather.twentyfourHours
-              ? Math.round(weather.twentyfourHours.temp)
+            forecastWeather.list
+              ? Math.round(forecastWeather.list[8].main.temp)
               : ''
           }}°C
         </p>
@@ -66,15 +102,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'WeatherData',
-  props: {
-    weather: {}
+  data: function() {
+    return {
+      currentWeather: {},
+      forecastWeather: {}
+    }
   },
   computed: {
+    ...mapState(['location']),
     getCurrentWeatherIcon() {
-      return this.weather.icon
-        ? require(`../assets/weatherIcons/${this.weather.icon}.svg`)
+      return this.currentWeather.weather
+        ? require(`../assets/weatherIcons/${this.currentWeather.weather[0].icon}.svg`)
         : ''
     },
     currentTime() {
@@ -88,23 +129,46 @@ export default {
       return moment().format('dddd DD MMMM')
     },
     get3hIcon() {
-      return this.weather.threeHours
-        ? require(`../assets/weatherIcons/${this.weather.threeHours.icon}.svg`)
+      return this.forecastWeather.list
+        ? require(`../assets/weatherIcons/${this.forecastWeather.list[1].weather[0].icon}.svg`)
         : ''
     },
     get6hIcon() {
-      return this.weather.sixHours
-        ? require(`../assets/weatherIcons/${this.weather.sixHours.icon}.svg`)
+      return this.forecastWeather.list
+        ? require(`../assets/weatherIcons/${this.forecastWeather.list[2].weather[0].icon}.svg`)
         : ''
     },
     get24hIcon() {
-      return this.weather.twentyfourHours
-        ? require(`../assets/weatherIcons/${this.weather.twentyfourHours.icon}.svg`)
+      return this.forecastWeather.list
+        ? require(`../assets/weatherIcons/${this.forecastWeather.list[8].weather[0].icon}.svg`)
         : ''
     }
   },
+  methods: {
+    getWeatherInfos() {
+      const axios = require('axios').default
+      axios
+        .all([
+          axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${this.location}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
+          ),
+          axios.get(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${this.location}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
+          )
+        ])
+        .then(
+          axios.spread((currentData, forecastData) => {
+            this.currentWeather = currentData.data
+            this.forecastWeather = forecastData.data
+          })
+        )
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  },
   created: function() {
-    console.log(this.weather)
+    this.getWeatherInfos()
   }
 }
 </script>

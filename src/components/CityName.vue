@@ -6,19 +6,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   name: 'CityName',
-  // props: {
-  //   location: String
-  // },
   data: function() {
     return {
       fontSizePx: 50
     }
   },
   computed: {
-    ...mapState(['location']),
+    location: {
+      get() {
+        return this.$store.state.location
+      },
+      set(value) {
+        this.$store.commit('UPDATE_LOCATION', value)
+      }
+    },
+    // ...mapState(['location']),
     adaptativeWidth() {
       return `font-size: ${this.fontSizePx}px; width: ${(this.location.length +
         1) *

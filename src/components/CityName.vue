@@ -27,7 +27,6 @@ export default {
   methods: {
     onSubmitForm(e) {
       e.preventDefault()
-      // this.$emit('cityChanged', this.location)
     }
   },
   watch: {

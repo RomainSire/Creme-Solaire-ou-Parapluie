@@ -148,22 +148,33 @@ export default {
     getWeatherInfos() {
       const axios = require('axios').default
       axios
-        .all([
-          axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?q=${this.location}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
-          ),
-          axios.get(
-            `https://api.openweathermap.org/data/2.5/forecast?q=${this.location}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
-          )
-        ])
-        .then(
-          axios.spread((currentData, forecastData) => {
-            this.currentWeather = currentData.data
-            this.forecastWeather = forecastData.data
-          })
+        .get(
+          `https://api-adresse.data.gouv.fr/search/?q=${this.location}&limit=1`
         )
+        .then(data => {
+          const lat = data.data.features[0].geometry.coordinates[1]
+          const long = data.data.features[0].geometry.coordinates[0]
+          axios
+            .all([
+              axios.get(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
+              ),
+              axios.get(
+                `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${process.env.VUE_APP_OPEN_WEATHER_KEY}&units=metric&lang=fr`
+              )
+            ])
+            .then(
+              axios.spread((currentData, forecastData) => {
+                this.currentWeather = currentData.data
+                this.forecastWeather = forecastData.data
+              })
+            )
+            .catch(error => {
+              console.error(error)
+            })
+        })
         .catch(error => {
-          console.error(error)
+          console.log(error)
         })
     }
   },

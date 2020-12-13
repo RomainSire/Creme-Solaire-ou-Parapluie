@@ -183,9 +183,9 @@ export default {
 }
 .main {
   position: absolute;
-  bottom: 20%;
+  bottom: 22%;
   @media screen and (max-width: 650px) {
-    bottom: 5%;
+    bottom: 6%;
   }
   left: 50%;
   transform: translateX(-50%);

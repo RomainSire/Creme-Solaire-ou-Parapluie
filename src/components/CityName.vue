@@ -1,7 +1,12 @@
 <template>
   <form autocomplete="off" v-on:submit="onSubmitForm">
     <label for="city">Ville</label>
-    <input type="text" id="city" v-model="location" :style="adaptativeWidth" />
+    <input
+      type="text"
+      id="city"
+      v-model.lazy="location"
+      :style="adaptativeWidth"
+    />
   </form>
 </template>
 
@@ -25,9 +30,10 @@ export default {
     },
     // ...mapState(['location']),
     adaptativeWidth() {
-      return `font-size: ${this.fontSizePx}px; width: ${(this.location.length +
-        1) *
-        (this.fontSizePx / 1.7)}px;`
+      // return `font-size: ${this.fontSizePx}px; width: ${(this.location.length +
+      //   1) *
+      //   (this.fontSizePx / 1.7)}px;`
+      return ''
     }
   },
   methods: {
@@ -46,14 +52,13 @@ label {
 input {
   // position & size
   position: absolute;
-  top: 25%;
+  top: 27%;
   @media screen and (max-width: 650px) {
-    top: 10%;
+    top: 12%;
   }
   left: 50%;
   transform: translateX(-50%);
-  min-width: 200px;
-  max-width: 85%;
+  width: 330px;
   // background & border
   background: #333d;
   border: 0.15em solid #fff;
@@ -63,5 +68,6 @@ input {
   text-align: center;
   font-family: 'Ubuntu Mono', monospace;
   text-transform: uppercase;
+  font-size: 40px;
 }
 </style>

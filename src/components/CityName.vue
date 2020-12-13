@@ -1,12 +1,7 @@
 <template>
   <form autocomplete="off" v-on:submit="onSubmitForm">
     <label for="city">Ville</label>
-    <input
-      type="text"
-      id="city"
-      v-model.lazy="location"
-      :style="adaptativeWidth"
-    />
+    <input type="text" id="city" v-model.lazy="location" />
   </form>
 </template>
 
@@ -14,9 +9,9 @@
 // import { mapState } from 'vuex'
 export default {
   name: 'CityName',
-  data: function() {
+  data() {
     return {
-      fontSizePx: 50
+      city: this.$route.query.location
     }
   },
   computed: {
@@ -27,19 +22,20 @@ export default {
       set(value) {
         this.$store.commit('UPDATE_LOCATION', value)
       }
-    },
-    // ...mapState(['location']),
-    adaptativeWidth() {
-      // return `font-size: ${this.fontSizePx}px; width: ${(this.location.length +
-      //   1) *
-      //   (this.fontSizePx / 1.7)}px;`
-      return ''
     }
   },
   methods: {
     onSubmitForm(e) {
       e.preventDefault()
       // this.$emit('cityChanged', this.location)
+    }
+  },
+  watch: {
+    location(newVal) {
+      this.$router.push(`/${newVal}`)
+    },
+    '$route.location': function(val) {
+      this.location = val
     }
   }
 }

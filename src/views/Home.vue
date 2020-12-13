@@ -28,7 +28,7 @@ export default {
   methods: {
     ...mapActions(['updateLocation'])
   },
-  mounted: function() {
+  created: function() {
     this.updateLocation(this.$route.params.location)
   }
 }

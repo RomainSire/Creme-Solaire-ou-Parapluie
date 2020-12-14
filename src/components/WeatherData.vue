@@ -119,14 +119,26 @@ export default {
         : ''
     },
     currentTime() {
-      var moment = require('moment')
-      moment.locale('fr')
-      return moment().format('HH:mm')
+      if (this.currentWeather.dt) {
+        var moment = require('moment')
+        moment.locale('fr')
+        return moment
+          .unix(this.currentWeather.dt + this.currentWeather.timezone - 3600)
+          .format('HH:mm')
+      } else {
+        return ''
+      }
     },
     currentDay() {
-      var moment = require('moment')
-      moment.locale('fr')
-      return moment().format('dddd DD MMMM')
+      if (this.currentWeather.dt) {
+        var moment = require('moment')
+        moment.locale('fr')
+        return moment
+          .unix(this.currentWeather.dt + this.currentWeather.timezone - 3600)
+          .format('dddd DD MMMM')
+      } else {
+        return ''
+      }
     },
     get3hIcon() {
       return this.forecastWeather.list
@@ -167,6 +179,7 @@ export default {
               axios.spread((currentData, forecastData) => {
                 this.currentWeather = currentData.data
                 this.forecastWeather = forecastData.data
+                console.log(this.currentWeather)
               })
             )
             .catch(error => {

@@ -149,11 +149,11 @@ export default {
       const axios = require('axios').default
       axios
         .get(
-          `https://api-adresse.data.gouv.fr/search/?q=${this.location}&limit=1`
+          `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${this.location}&key=${process.env.VUE_APP_GPLACE_KEY}&inputtype=textquery&language=fr&fields=geometry`
         )
         .then(data => {
-          const lat = data.data.features[0].geometry.coordinates[1]
-          const long = data.data.features[0].geometry.coordinates[0]
+          const lat = data.data.candidates[0].geometry.location.lat
+          const long = data.data.candidates[0].geometry.location.lng
           axios
             .all([
               axios.get(

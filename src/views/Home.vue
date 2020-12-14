@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <ReactiveBackground
-      imageUrl="https://media.routard.com/image/01/4/fb-perpignan.1543014.jpg"
-    />
+    <ReactiveBackground :key="location + Math.random()" />
     <CityName />
     <WeatherData :key="location" />
   </div>

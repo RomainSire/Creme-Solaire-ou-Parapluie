@@ -6,15 +6,45 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'ReactiiveBackground',
-  props: {
-    imageUrl: String
+  data: function() {
+    return {
+      image: ''
+    }
   },
   computed: {
+    ...mapState(['location']),
     adaptativeBackgroundImage() {
-      return `background-image: url('${this.imageUrl}')`
+      return `background-image: url('${this.image}')`
     }
+  },
+  methods: {
+    getimageUrl() {
+      const axios = require('axios').default
+      axios
+        .get(
+          `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${this.location}&key=${process.env.VUE_APP_GPLACE_KEY}&inputtype=textquery&language=fr&fields=name,photos`
+        )
+        .then(async data => {
+          const photoReference =
+            data.data.candidates[0].photos[0].photo_reference
+          console.log(photoReference)
+          const imageURLQuery = await fetch(
+            `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&key=${process.env.VUE_APP_GPLACE_KEY}&maxwidth=1000&maxheight=800`
+          )
+            .then(r => r.blob())
+            .catch(console.error)
+          this.image = URL.createObjectURL(imageURLQuery)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  },
+  mounted() {
+    this.getimageUrl()
   }
 }
 </script>

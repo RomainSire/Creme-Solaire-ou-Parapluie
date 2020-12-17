@@ -25,13 +25,13 @@ export default {
       const axios = require('axios').default
       axios
         .get(
-          `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${this.location}&key=${process.env.VUE_APP_GPLACE_KEY}&inputtype=textquery&language=fr&fields=photos`
+          `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${this.location}&key=${process.env.VUE_APP_GPLACE_KEY}&inputtype=textquery&language=fr&fields=photos`
         )
         .then(async data => {
           const photoReference =
             data.data.candidates[0].photos[0].photo_reference
           const imageURLQuery = await fetch(
-            `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&key=${process.env.VUE_APP_GPLACE_KEY}&maxwidth=1280&maxheight=720`
+            `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&key=${process.env.VUE_APP_GPLACE_KEY}&maxwidth=1280&maxheight=720`
           )
             .then(r => r.blob())
             .catch(console.error)

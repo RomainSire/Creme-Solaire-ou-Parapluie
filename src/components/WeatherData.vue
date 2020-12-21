@@ -161,7 +161,7 @@ export default {
       const axios = require('axios').default
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${this.location}&key=${process.env.VUE_APP_GPLACE_KEY}&inputtype=textquery&language=fr&fields=geometry`
+          `${process.env.VUE_APP_MY_CORS_PROXY}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${this.location}&key=${process.env.VUE_APP_GPLACE_KEY}&inputtype=textquery&language=fr&fields=geometry`
         )
         .then(data => {
           const lat = data.data.candidates[0].geometry.location.lat

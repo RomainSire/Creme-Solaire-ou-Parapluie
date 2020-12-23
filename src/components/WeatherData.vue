@@ -119,18 +119,20 @@ export default {
         : ''
     },
     currentTime() {
-      if (this.currentWeather.dt) {
+      if (this.currentWeather.dt && this.currentWeather.dt !== 'error') {
         var moment = require('moment')
         moment.locale('fr')
         return moment
           .unix(this.currentWeather.dt + this.currentWeather.timezone - 3600)
           .format('HH:mm')
+      } else if (this.currentWeather.dt && this.currentWeather.dt === 'error') {
+        return 'Erreur !'
       } else {
-        return ''
+        return 'chargement...'
       }
     },
     currentDay() {
-      if (this.currentWeather.dt) {
+      if (this.currentWeather.dt && this.currentWeather.dt !== 'error') {
         var moment = require('moment')
         moment.locale('fr')
         return moment
@@ -180,18 +182,40 @@ export default {
                 this.currentWeather = currentData.data
                 this.forecastWeather = forecastData.data
                 console.log(this.currentWeather)
+                console.log(this.forecastWeather)
               })
             )
             .catch(error => {
-              console.error(error)
+              this.currentWeather = []
+              this.currentWeather.weather = []
+              this.currentWeather.weather.push({
+                icon: 'error',
+                description: 'Erreur'
+              })
+              this.currentWeather.dt = 'error'
+              console.log(error)
             })
         })
         .catch(error => {
+          this.currentWeather = []
+          this.currentWeather.weather = []
+          this.currentWeather.weather.push({
+            icon: 'error',
+            description: 'Erreur'
+          })
+          this.currentWeather.dt = 'error'
           console.log(error)
         })
     }
   },
   created: function() {
+    // Initialisation des variables par défaut
+    this.currentWeather.weather = []
+    this.currentWeather.weather.push({
+      icon: 'refresh',
+      description: 'rechargement de la page'
+    })
+    // Appel APIs
     this.getWeatherInfos()
   }
 }

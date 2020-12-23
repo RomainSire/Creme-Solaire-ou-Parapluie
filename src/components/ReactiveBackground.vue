@@ -34,7 +34,9 @@ export default {
             `${process.env.VUE_APP_MY_CORS_PROXY}https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&key=${process.env.VUE_APP_GPLACE_KEY}&maxwidth=1280&maxheight=720`
           )
             .then(r => r.blob())
-            .catch(console.error)
+            .catch(error => {
+              console.log(error)
+            })
           this.image = URL.createObjectURL(imageURLQuery)
         })
         .catch(error => {
@@ -43,6 +45,7 @@ export default {
     }
   },
   mounted() {
+    this.image = require('../assets/default_bg.jpg')
     this.getimageUrl()
   }
 }

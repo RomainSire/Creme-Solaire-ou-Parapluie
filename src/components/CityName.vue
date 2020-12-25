@@ -48,7 +48,7 @@ input {
   position: absolute;
   top: 27%;
   @media screen and (max-width: 650px) {
-    top: 12%;
+    top: 8%;
   }
   left: 50%;
   transform: translateX(-50%);

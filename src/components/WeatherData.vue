@@ -279,12 +279,12 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-between;
   img {
-    width: 40px;
-    max-height: 40px;
+    width: 35px;
+    max-height: 35px;
   }
   p {
     margin: 1em 0 0 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   & > div {
     height: 100px;
@@ -320,11 +320,11 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-between;
   img {
-    width: 40px;
-    max-height: 40px;
+    width: 35px;
+    max-height: 35px;
   }
   p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   &--time {
     margin: 0 0 0.5em 0;

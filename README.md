@@ -1,7 +1,5 @@
 # creme-solaire-ou-parapluie
 
-# :warning: :construction: WORK IN PROGRESS :construction: :warning:
-
 ## Context
 I started to studdy Vue.Js, and the best way to learn is to code an app!  
 This is a simple but fun weather app'. I tried to create something "UX friendly", and got inspiration on Dribbble.  
